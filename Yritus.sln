@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yritus", "Yritus\Yritus.csproj", "{D3EE83C5-C73A-40D9-917F-50C4514FC88B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{34B24D47-CAF3-46FA-B3AE-FCACCF53871F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APP", "APP", "{91F7DD5C-EA3B-45FD-8D79-075E6FEF4776}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3EE83C5-C73A-40D9-917F-50C4514FC88B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EE83C5-C73A-40D9-917F-50C4514FC88B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EE83C5-C73A-40D9-917F-50C4514FC88B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EE83C5-C73A-40D9-917F-50C4514FC88B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3EE83C5-C73A-40D9-917F-50C4514FC88B} = {91F7DD5C-EA3B-45FD-8D79-075E6FEF4776}
+	EndGlobalSection
+EndGlobal
