@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kasutaja\\Desktop\\RIK Arendaja\\yritus\\Yritus\\Yritus.csproj",
-      "projectName": "Yritus",
-      "projectPath": "C:\\Users\\Kasutaja\\Desktop\\RIK Arendaja\\yritus\\Yritus\\Yritus.csproj",
+      "projectUniqueName": "C:\\Users\\Kasutaja\\Desktop\\RIK Arendaja\\yritus\\WebApp\\WebApp.csproj",
+      "projectName": "WebApp",
+      "projectPath": "C:\\Users\\Kasutaja\\Desktop\\RIK Arendaja\\yritus\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\Kasutaja\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kasutaja\\Desktop\\RIK Arendaja\\yritus\\Yritus\\obj\\",
+      "outputPath": "C:\\Users\\Kasutaja\\Desktop\\RIK Arendaja\\yritus\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kasutaja\\AppData\\Roaming\\NuGet\\NuGet.Config"

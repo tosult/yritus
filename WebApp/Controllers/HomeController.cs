@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Yritus.Models;
+using WebApp.Models;
 
-namespace Yritus.Controllers;
+namespace WebApp.Controllers;
 
 public class HomeController : Controller
 {

@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yritus", "Yritus\Yritus.csproj", "{D3EE83C5-C73A-40D9-917F-50C4514FC88B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{D3EE83C5-C73A-40D9-917F-50C4514FC88B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{34B24D47-CAF3-46FA-B3AE-FCACCF53871F}"
+	ProjectSection(SolutionItems) = preProject
+		ERD.pdf = ERD.pdf
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APP", "APP", "{91F7DD5C-EA3B-45FD-8D79-075E6FEF4776}"
 EndProject

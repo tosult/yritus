@@ -1,4 +1,4 @@
-namespace Yritus.Models;
+namespace WebApp.Models;
 
 public class ErrorViewModel
 {
