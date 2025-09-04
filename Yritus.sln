@@ -5,6 +5,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{34B24D47-CAF3-46FA-B3AE-FCACCF53871F}"
 	ProjectSection(SolutionItems) = preProject
 		ERD.pdf = ERD.pdf
+		Semantika.pdf = Semantika.pdf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APP", "APP", "{91F7DD5C-EA3B-45FD-8D79-075E6FEF4776}"
