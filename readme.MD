@@ -1,0 +1,3 @@
+# NuGet packages
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Sqlite
