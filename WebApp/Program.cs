@@ -1,3 +1,5 @@
+using BLL.App;
+using BLL.Contracts.App;
 using DAL.Contracts.App;
 using DAL.EF.App;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 
 builder.Services.AddScoped<IAppUOW, AppUOW>();
+builder.Services.AddScoped<IAppBLL, AppBLL>();
 
 builder.Services.AddControllersWithViews();
 
