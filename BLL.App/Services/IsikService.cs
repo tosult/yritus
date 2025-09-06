@@ -22,12 +22,12 @@ public class IsikService : BaseEntityService<BLL.DTO.Isik, Domain.App.Isik, IIsi
         );
     }
 
-    public async Task<DTO.Isik?> FindASync(Guid id, Guid userId)
+    public async Task<DTO.Isik?> FindAsync(Guid id)
     {
         return Mapper.Map(await Uow.IsikRepository.FindAsync(id));
     }
 
-    public async Task<DTO.Isik?> RemoveASync(Guid id, Guid userId)
+    public async Task<DTO.Isik?> RemoveAsync(Guid id)
     {
         return Mapper.Map(await Uow.IsikRepository.RemoveAsync(id));
     }

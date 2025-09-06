@@ -10,8 +10,6 @@ public interface IOsavotumaksuStaatusRepository : IBaseRepository<OsavotumaksuSt
 
 public interface IOsavotumaksuStaatusRepositoryCustom<TEntity>
 {
-    Task<IEnumerable<TEntity>> AllAsync();
-    
     Task<TEntity?> FindAsync(Guid id);
     
     Task<TEntity?> RemoveAsync(Guid id);

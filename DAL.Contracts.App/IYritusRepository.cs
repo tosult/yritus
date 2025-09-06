@@ -10,8 +10,6 @@ public interface IYritusRepository : IBaseRepository<Yritus>, IYritusRepositoryC
 
 public interface IYritusRepositoryCustom<TEntity>
 {
-    Task<IEnumerable<TEntity>> AllAsync();
-    
     Task<TEntity?> FindAsync(Guid id);
     
     Task<TEntity?> RemoveAsync(Guid id);

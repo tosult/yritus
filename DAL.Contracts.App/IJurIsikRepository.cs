@@ -10,8 +10,6 @@ public interface IJurIsikRepository : IBaseRepository<JurIsik>, IJurIsikReposito
 
 public interface IJurIsikRepositoryCustom<TEntity>
 {
-    Task<IEnumerable<TEntity>> AllAsync();
-    
     Task<TEntity?> FindAsync(Guid id);
     
     Task<TEntity?> RemoveAsync(Guid id);

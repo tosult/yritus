@@ -10,8 +10,6 @@ public interface IOsavotumaksRepository : IBaseRepository<Osavotumaks>, IOsavotu
 
 public interface IOsavotumaksRepositoryCustom<TEntity>
 {
-    Task<IEnumerable<TEntity>> AllAsync();
-    
     Task<TEntity?> FindAsync(Guid id);
     
     Task<TEntity?> RemoveAsync(Guid id);

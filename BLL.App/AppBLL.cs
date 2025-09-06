@@ -1,4 +1,5 @@
 using AutoMapper;
+using BLL.App.Services;
 using BLL.Base;
 using BLL.Contracts.App;
 using DAL.Contracts.App;
@@ -17,6 +18,5 @@ public class AppBLL : BaseBLL<IAppUOW>, IAppBLL
     }
     
     private IIsikService? _isikService;
-    public IIsikService IsikService =>
-    _isikService ??= new IsikService(Uow, new IsikMapper(_mapper));
+    
 }

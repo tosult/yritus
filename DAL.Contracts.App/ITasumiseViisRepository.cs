@@ -10,8 +10,6 @@ public interface ITasumiseViisRepository : IBaseRepository<TasumiseViis>, ITasum
 
 public interface ITasumiseViisRepositoryCustom<TEntity>
 {
-    Task<IEnumerable<TEntity>> AllAsync();
-    
     Task<TEntity?> FindAsync(Guid id);
     
     Task<TEntity?> RemoveAsync(Guid id);
