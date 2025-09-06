@@ -1,3 +1,6 @@
 # NuGet packages
 Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.Sqlite
+
+Automapper
+AutoMapper.Extensions.Microsoft.DependencyInjection

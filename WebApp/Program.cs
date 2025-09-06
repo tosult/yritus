@@ -14,6 +14,10 @@ builder.Services.AddScoped<IAppUOW, AppUOW>();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAutoMapper(
+    typeof(BLL.App.AutoMapperConfig)
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
