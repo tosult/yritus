@@ -8,7 +8,7 @@ public interface IAppUOW : IBaseUOW
     
     IIsikYrituselRepository IsikYrituselRepository { get; }
     
-    IIsikYrituselRollRepository IsIkYrituselRollRepository { get; }
+    IIsikYrituselRollRepository IsikYrituselRollRepository { get; }
     
     IJurIsikRepository JurIsikRepository { get; }
     
