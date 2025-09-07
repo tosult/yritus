@@ -21,6 +21,8 @@ builder.Services.AddAutoMapper(
     typeof(BLL.App.AutoMapperConfig)
 );
 
+// TODO: SetupAppData();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,3 +47,8 @@ app.MapControllerRoute(
 
 
 app.Run();
+
+static void SetupAppData()
+{
+    // TODO: Setting up
+}
