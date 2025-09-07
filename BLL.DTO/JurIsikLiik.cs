@@ -4,7 +4,7 @@ namespace BLL.DTO;
 
 public class JurIsikLiik : DomainEntityId
 {
-    public int Liik { get; set; }
+    public string LiikNimetus { get; set; }
     
     public ICollection<JurIsik>? JurIsikud { get; set; }
 }

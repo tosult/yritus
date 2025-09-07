@@ -4,5 +4,5 @@ namespace Domain.App;
 
 public class IsikYrituselRoll : DomainEntityId
 {
-    public int Roll { get; set; }
+    public string RollNimetus { get; set; }
 }

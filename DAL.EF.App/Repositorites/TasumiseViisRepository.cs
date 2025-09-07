@@ -16,7 +16,7 @@ public class TasumiseViisRepository : EFBaseRepository<TasumiseViis, Application
     {
         return await RepositoryDbSet
             .Include(e => e.Osavotumaksud)
-            .OrderBy(e => e.Viis)
+            .OrderBy(e => e.ViisNimetus)
             .ToListAsync();
     }
 

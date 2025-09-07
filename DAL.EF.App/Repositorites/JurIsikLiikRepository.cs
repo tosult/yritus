@@ -16,7 +16,7 @@ public class JurIsikLiikRepository : EFBaseRepository<JurIsikLiik, ApplicationDb
     {
         return await RepositoryDbSet
             .Include(e => e.JurIsikud)
-            .OrderBy(e => e.Liik)
+            .OrderBy(e => e.LiikNimetus)
             .ToListAsync();
     }
 
