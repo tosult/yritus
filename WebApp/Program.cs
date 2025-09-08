@@ -17,8 +17,10 @@ builder.Services.AddScoped<IAppBLL, AppBLL>();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAutoMapper(
-    typeof(BLL.App.AutoMapperConfig)
+builder.Services.AddAutoMapper(cfg =>
+    {
+        cfg.AddMaps(typeof(BLL.App.AutoMapperConfig).Assembly);
+    }
 );
 
 // TODO: SetupAppData();
