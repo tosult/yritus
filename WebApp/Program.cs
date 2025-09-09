@@ -2,6 +2,7 @@ using BLL.App;
 using BLL.Contracts.App;
 using DAL.Contracts.App;
 using DAL.EF.App;
+using DAL.EF.App.Seeding;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,9 +24,9 @@ builder.Services.AddAutoMapper(cfg =>
     }
 );
 
-// TODO: SetupAppData();
-
 var app = builder.Build();
+
+SetupAppData(app, app.Configuration);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -50,7 +51,40 @@ app.MapControllerRoute(
 
 app.Run();
 
-static void SetupAppData()
+static void SetupAppData(IApplicationBuilder app, IConfiguration configuration)
 {
-    // TODO: Setting up
+    using var serviceScope = app.ApplicationServices
+        .GetRequiredService<IServiceScopeFactory>()
+        .CreateScope();
+    
+    using var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+
+    if (context == null)
+    {
+        throw new ApplicationException("Database context not found");
+    }
+
+    var logger = serviceScope.ServiceProvider.GetService<ILogger<IApplicationBuilder>>();
+
+    if (logger == null)
+    {
+        throw new ApplicationException("Logger not found");
+    }
+
+    if (configuration.GetValue<bool>("DataInit:DropDatabase"))
+    {
+        logger.LogWarning("Dropping database!");
+    }
+    
+    if (configuration.GetValue<bool>("DataInit:MigrateDatabase"))
+    {
+        logger.LogWarning("Migrating database!");
+        AppDataInit.MigrateDataBase(context);
+    }
+    
+    if (configuration.GetValue<bool>("DataInit:SeedData"))
+    {
+        logger.LogWarning("Seeding initial data!");
+        AppDataInit.SeedAppData(context);
+    }
 }
