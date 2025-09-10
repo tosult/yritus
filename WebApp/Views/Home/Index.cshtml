@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Domain.App.Yritus>
+﻿@using Domain.App
+@model IEnumerable<Domain.App.Yritus>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -22,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Asukoht)
         </th>
+        <th>
+            Registreerunute arv
+        </th>
         <th></th>
     </tr>
     </thead>
@@ -29,7 +33,7 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-controller="Yritused" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Nimi)</a>
+                @Html.DisplayFor(modelItem => item.Nimi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Algus)
@@ -41,7 +45,14 @@
                 @Html.DisplayFor(modelItem => item.Asukoht)
             </td>
             <td>
-                <a asp-controller="Yritused" asp-action="Delete" asp-route-id="@item.Id">Kustuta üritus</a>
+                @Html.DisplayFor(modelItem => item.IsikudYritusel.Count)
+            </td>
+            <td>
+                <a asp-controller="Yritused" asp-action="Edit" asp-route-id="@item.Id">Vaata/ muuda</a>
+                @if (item.Algus > DateTime.Now)
+                {
+                    <a asp-controller="Yritused" asp-action="Delete" asp-route-id="@item.Id">Kustuta üritus</a>
+                }
             </td>
         </tr>
     }
