@@ -1,7 +1,7 @@
 @model Domain.App.Yritus
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Ürituse info";
 }
 
 <h1>Details</h1>
@@ -37,6 +37,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Tagasi</a>
 </div>
