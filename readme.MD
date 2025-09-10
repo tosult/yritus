@@ -15,3 +15,7 @@ dotnet ef database update --project DAL.EF.App --startup-project WebApp --contex
 
 # MVC
 dotnet aspnet-codegenerator controller -m Domain.App.Yritus -name YritusedController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
+
+dotnet aspnet-codegenerator controller -m Domain.App.Isik -name IsikudController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
+dotnet aspnet-codegenerator controller -m Domain.App.JurIsik -name JurIsikudController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
+dotnet aspnet-codegenerator controller -m Domain.App.TasumiseViis -name TasumiseViisidController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
