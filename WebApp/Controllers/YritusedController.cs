@@ -55,7 +55,7 @@ namespace WebApp.Controllers
                 yritus.Id = Guid.NewGuid();
                 _context.Add(yritus);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(HomeController.Index));
+                return RedirectToAction("Index", "Home");
             }
             return View(yritus);
         }
@@ -106,7 +106,7 @@ namespace WebApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             return View(yritus);
         }
@@ -141,7 +141,7 @@ namespace WebApp.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool YritusExists(Guid id)
