@@ -35,15 +35,18 @@
             @Html.DisplayFor(model => model.Asukoht)
         </dd>
         <dd class="col-sm-10">
-            <table>
-                <thead>
-                <tr>
-                    <th>Eesnimi</th>
-                    <th>Perenimi</th>
-                    <th>Isikukood</th>
-                </tr>
-                </thead>
-                <tbody>
+            @if (Model.IsikudYritusel != null)
+            {
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Eesnimi</th>
+                        <th>Perenimi</th>
+                        <th>Isikukood</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
                     @foreach (var osaleja in Model.IsikudYritusel)
                     {
                         <tr>
@@ -52,8 +55,13 @@
                             <td>@osaleja.Isik.Isikukood</td>
                         </tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
+            @if (Model.IsikudYritusel == null)
+            {
+                <div><b>Üritusel puuduvad osalejad</b></div>
+            }
         </dd>
     </dl>
 </div>

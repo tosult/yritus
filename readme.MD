@@ -1,3 +1,7 @@
+# Logic errors
+## - Andmebaasi mudel - 
+Isikukood - Töö käigus on selgunud, et põhjalikult on jäänud läbi mõtlemata Isik seotud Isikukood, mis määratud int tüüpi. Korrektne oleks ilmselt long, mis võimaldaks EE isikukoodide väärtusi.
+
 # NuGet packages
 Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.Sqlite
