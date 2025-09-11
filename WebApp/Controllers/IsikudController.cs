@@ -46,6 +46,7 @@ namespace WebApp.Controllers
         // GET: Isikud/Create
         public IActionResult Create()
         {
+            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id");
             return View();
         }
 
@@ -54,15 +55,37 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OsavotumaksId,Eesnimi,Perenimi,Isikukood,Lisainfo,Id")] Isik isik)
+        public async Task<IActionResult> Create([Bind("Eesnimi,Perenimi,Isikukood,Lisainfo,Id")] Isik isik)
         {
             if (ModelState.IsValid)
             {
+                var defaultStaatusId = _context.OsavotumaksuStaatused
+                    .Where(s => s.Staatus == false)
+                    .Select(s => s.Id)
+                    .FirstOrDefault();
+                
+                
+                var defaultViisId = _context.TasumiseViisid
+                    .Where(s => s.ViisNimetus == "Sularaha")
+                    .Select(s => s.Id)
+                    .FirstOrDefault();
+                
+                var guidOsavotumaks = Guid.NewGuid();
+                var osavotumaks = new Osavotumaks()
+                {
+                    Id = guidOsavotumaks,
+                    OsavotumaksuStaatusId = defaultStaatusId,
+                    TasumiseViisId = defaultViisId
+                };
+                _context.Add(osavotumaks);
                 isik.Id = Guid.NewGuid();
+                isik.OsavotumaksId = guidOsavotumaks;
                 _context.Add(isik);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id", isik.OsavotumaksId);
             return View(isik);
         }
 
@@ -79,6 +102,7 @@ namespace WebApp.Controllers
             {
                 return NotFound();
             }
+            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id", isik.OsavotumaksId);
             return View(isik);
         }
 
@@ -87,7 +111,7 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("OsavotumaksId,Eesnimi,Perenimi,Isikukood,Lisainfo,Id")] Isik isik)
+        public async Task<IActionResult> Edit(Guid id, [Bind("OsavotumaksId, Eesnimi,Perenimi,Isikukood,Lisainfo,Id")] Isik isik)
         {
             if (id != isik.Id)
             {
@@ -114,6 +138,7 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id", isik.OsavotumaksId);
             return View(isik);
         }
 

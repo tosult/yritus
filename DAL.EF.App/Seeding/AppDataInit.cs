@@ -21,6 +21,7 @@ public static class AppDataInit
         SeedAppDataRollid(context);
         SeedAppDataVormid(context);
         SeedAppDataViisid(context);
+        SeedAppDataStaatus(context);
         context.SaveChanges();
     }
 
@@ -79,6 +80,20 @@ public static class AppDataInit
         context.TasumiseViisid.Add(new TasumiseViis()
         { 
             ViisNimetus = "Sularaha"
+        });
+    }
+    
+    public static void SeedAppDataStaatus(ApplicationDbContext context)
+    {
+        if (context.OsavotumaksuStaatused.Any()) return;
+
+        context.OsavotumaksuStaatused.Add(new OsavotumaksuStaatus()
+        {
+            Staatus = false
+        });
+        context.OsavotumaksuStaatused.Add(new OsavotumaksuStaatus()
+        {
+            Staatus = true
         });
     }
 }
