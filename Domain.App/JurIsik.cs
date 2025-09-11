@@ -6,8 +6,10 @@ namespace Domain.App;
 public class JurIsik : DomainEntityId
 {
     public Guid OsavotumaksId { get; set; }
+    public Osavotumaks? Osavotumaks { get; set; }
     
     public Guid JurIsikLiikId { get; set; }
+    public JurIsikLiik? JurIsikLiik { get; set; }
     
     [MaxLength(128)]
     public string Nimi { get; set; }

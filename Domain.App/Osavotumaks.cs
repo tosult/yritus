@@ -5,8 +5,10 @@ namespace Domain.App;
 public class Osavotumaks : DomainEntityId
 {
     public Guid OsavotumaksuStaatusId { get; set; }
+    public OsavotumaksuStaatus? OsavotumaksuStaatus { get; set; }
     
     public Guid TasumiseViisId { get; set; }
+    public TasumiseViis? TasumiseViis { get; set; }
     
     public ICollection<Isik>? Isikud  { get; set; }
     

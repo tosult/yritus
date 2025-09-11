@@ -5,8 +5,10 @@ public class Osavotumaks
     public Guid Id { get; set; }
     
     public Guid OsavotumaksuStaatusId { get; set; }
+    public OsavotumaksuStaatus? OsavotumaksuStaatus { get; set; }
     
     public Guid TasumiseViisId { get; set; }
+    public TasumiseViis? TasumiseViis { get; set; }
     
     public ICollection<Isik>? Isikud  { get; set; }
     

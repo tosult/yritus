@@ -7,6 +7,7 @@ public class Isik
     public Guid id { get; set; }
     
     public Guid OsavotumaksId { get; set; }
+    public Osavotumaks? Osavotumaks { get; set; }
     
     [MaxLength(64)]
     public string Eesnimi { get; set; }
