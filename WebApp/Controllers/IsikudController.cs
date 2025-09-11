@@ -64,7 +64,6 @@ namespace WebApp.Controllers
                     .Select(s => s.Id)
                     .FirstOrDefault();
                 
-                
                 var defaultViisId = _context.TasumiseViisid
                     .Where(s => s.ViisNimetus == "Sularaha")
                     .Select(s => s.Id)
