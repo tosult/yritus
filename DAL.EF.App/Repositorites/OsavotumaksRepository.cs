@@ -17,6 +17,8 @@ public class OsavotumaksRepository : EFBaseRepository<Osavotumaks, ApplicationDb
         return await RepositoryDbSet
             .Include(e => e.Isikud)
             .Include(e => e.JurIsikud)
+            .Include(e => e.TasumiseViis)
+            .Include(e => e.OsavotumaksuStaatus)
             .OrderBy(e => e.OsavotumaksuStaatusId)
             .ToListAsync();
     }
@@ -26,6 +28,8 @@ public class OsavotumaksRepository : EFBaseRepository<Osavotumaks, ApplicationDb
         return await RepositoryDbSet
             .Include(e => e.Isikud)
             .Include(e => e.JurIsikud)
+            .Include(e => e.TasumiseViis)
+            .Include(e => e.OsavotumaksuStaatus)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 

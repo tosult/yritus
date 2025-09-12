@@ -49,7 +49,7 @@ namespace WebApp.Controllers
         // GET: JurIsikud/Create
         public async Task<IActionResult> Create()
         {
-            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Name");
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id");
             ViewData["JurIsikLiikId"] = new SelectList(await _uow.JurIsikLiikRepository.AllAsync(), "Id", "LiikNimetus");
             return View();
         }

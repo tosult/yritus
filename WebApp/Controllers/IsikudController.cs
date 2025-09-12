@@ -48,7 +48,7 @@ namespace WebApp.Controllers
         // GET: Isikud/Create
         public async Task<IActionResult> Create()
         {
-            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Name");
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "id");
             return View();
         }
 

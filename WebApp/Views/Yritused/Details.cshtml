@@ -40,17 +40,17 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>Eesnimi</th>
-                        <th>Perenimi</th>
-                        <th>Isikukood</th>
+                        <th>Eesnimi / Nimetus</th>
+                        <th>Perenimi / Liik</th>
+                        <th>Isikukood / Registrikood</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach (var osaleja in Model.IsikudYritusel)
                     {
                         <tr>
-                            <td>@osaleja.Isik.Eesnimi</td>
-                            <td>@osaleja.Isik.Perenimi</td>
+                            <td><a asp-controller="Isikud" asp-action="Details" asp-route-id="@osaleja.Isik.Id">@osaleja.Isik!.Eesnimi</a></td>
+                            <td>@osaleja.Isik!.Perenimi</td>
                             <td>@osaleja.Isik.Isikukood</td>
                         </tr>
                     }
