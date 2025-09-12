@@ -35,7 +35,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var yritus = await _uow.IsikRepository
+            var yritus = await _uow.YritusRepository
                 .FindAsync(id.Value);
             if (yritus == null)
             {

@@ -16,6 +16,7 @@ public class YritusRepository : EFBaseRepository<Yritus, ApplicationDbContext>, 
     {
         return await RepositoryDbSet
             .Include(e => e.IsikudYritusel)
+            .ThenInclude(e => e.Isik)
             .OrderBy(e => e.Algus)
             .ToListAsync();
     }
@@ -24,6 +25,7 @@ public class YritusRepository : EFBaseRepository<Yritus, ApplicationDbContext>, 
     {
         return await RepositoryDbSet
             .Include(e => e.IsikudYritusel)
+            .ThenInclude(e => e.Isik)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
