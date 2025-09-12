@@ -15,6 +15,9 @@ public class IsikYrituselRepository : EFBaseRepository<IsikYritusel, Application
     public override async Task<IEnumerable<IsikYritusel>> AllAsync()
     {
         return await RepositoryDbSet
+            .Include(e => e.Isik)
+            .Include(e => e.JurIsik)
+            .Include(e => e.Yritus)
             .OrderBy(e => e.YritusId)
             .ToListAsync();
     }

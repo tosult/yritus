@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Contracts.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,18 @@ namespace WebApp.Controllers
 {
     public class JurIsikudController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUOW _uow;
 
-        public JurIsikudController(ApplicationDbContext context)
+        public JurIsikudController(IAppUOW uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: JurIsikud
         public async Task<IActionResult> Index()
         {
-            return View(await _context.JurIsikud.ToListAsync());
+            var vm = await _uow.JurIsikRepository.AllAsync();
+            return View(vm);
         }
 
         // GET: JurIsikud/Details/5
@@ -33,8 +35,9 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var jurIsik = await _context.JurIsikud
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var jurIsik = await _uow.JurIsikRepository
+                .FindAsync(id.Value);
+            
             if (jurIsik == null)
             {
                 return NotFound();
@@ -44,8 +47,10 @@ namespace WebApp.Controllers
         }
 
         // GET: JurIsikud/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Name");
+            ViewData["JurIsikLiikId"] = new SelectList(await _uow.JurIsikLiikRepository.AllAsync(), "Id", "LiikNimetus");
             return View();
         }
 
@@ -59,8 +64,8 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 jurIsik.Id = Guid.NewGuid();
-                _context.Add(jurIsik);
-                await _context.SaveChangesAsync();
+                _uow.JurIsikRepository.Add(jurIsik);
+                await _uow.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(jurIsik);
@@ -74,7 +79,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var jurIsik = await _context.JurIsikud.FindAsync(id);
+            var jurIsik = await _uow.JurIsikRepository.FindAsync(id.Value);
             if (jurIsik == null)
             {
                 return NotFound();
@@ -98,8 +103,8 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(jurIsik);
-                    await _context.SaveChangesAsync();
+                    _uow.JurIsikRepository.Update(jurIsik);
+                    await _uow.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,8 +130,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var jurIsik = await _context.JurIsikud
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var jurIsik = await _uow.JurIsikRepository.FindAsync(id.Value);
+                
             if (jurIsik == null)
             {
                 return NotFound();
@@ -140,19 +145,16 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var jurIsik = await _context.JurIsikud.FindAsync(id);
-            if (jurIsik != null)
-            {
-                _context.JurIsikud.Remove(jurIsik);
-            }
-
-            await _context.SaveChangesAsync();
+            await _uow.JurIsikRepository.RemoveAsync(id);
+            
+            await _uow.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
         private bool JurIsikExists(Guid id)
         {
-            return _context.JurIsikud.Any(e => e.Id == id);
+            return (_uow.JurIsikRepository?.FindAsync(id) == null);
         }
     }
 }

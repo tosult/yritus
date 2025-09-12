@@ -45,7 +45,7 @@
                 @Html.DisplayFor(modelItem => item.Asukoht)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsikudYritusel.Count)
+                @Html.DisplayFor(modelItem => item.IsikudYritusel!.Count)
             </td>
             <td>
                 <a asp-controller="Yritused" asp-action="Edit" asp-route-id="@item.Id">Vaata/ muuda</a>

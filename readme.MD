@@ -23,3 +23,5 @@ dotnet aspnet-codegenerator controller -m Domain.App.Yritus -name YritusedContro
 dotnet aspnet-codegenerator controller -m Domain.App.Isik -name IsikudController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
 dotnet aspnet-codegenerator controller -m Domain.App.JurIsik -name JurIsikudController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
 dotnet aspnet-codegenerator controller -m Domain.App.TasumiseViis -name TasumiseViisidController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f
+
+dotnet aspnet-codegenerator controller -m Domain.App.IsikYritusel -name IsikudYrituselController -outDir Controllers -dc ApplicationDbContext  -udl --referenceScriptLibraries -f

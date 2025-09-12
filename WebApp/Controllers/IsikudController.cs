@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Contracts.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,18 @@ namespace WebApp.Controllers
 {
     public class IsikudController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUOW _uow;
 
-        public IsikudController(ApplicationDbContext context)
+        public IsikudController(IAppUOW uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: Isikud
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Isikud.ToListAsync());
+            var vm = await _uow.IsikRepository.AllAsync();
+            return View(vm);
         }
 
         // GET: Isikud/Details/5
@@ -33,8 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var isik = await _context.Isikud
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var isik = await _uow.IsikRepository
+                .FindAsync(id.Value);
             if (isik == null)
             {
                 return NotFound();
@@ -44,9 +46,9 @@ namespace WebApp.Controllers
         }
 
         // GET: Isikud/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id");
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Name");
             return View();
         }
 
@@ -59,15 +61,17 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var defaultStaatusId = _context.OsavotumaksuStaatused
-                    .Where(s => s.Staatus == false)
-                    .Select(s => s.Id)
-                    .FirstOrDefault();
-                
-                var defaultViisId = _context.TasumiseViisid
-                    .Where(s => s.ViisNimetus == "Sularaha")
-                    .Select(s => s.Id)
-                    .FirstOrDefault();
+                var defaultStaatusId = _uow.OsavotumaksuStaatusRepository
+                    .AllAsync()
+                    .Result
+                    .FirstOrDefault(i => !i.Staatus)
+                    .Id;
+
+                var defaultViisId = _uow.TasumiseViisRepository
+                    .AllAsync()
+                    .Result
+                    .FirstOrDefault(i => i.ViisNimetus == "Sularaha")
+                    .Id;
                 
                 var guidOsavotumaks = Guid.NewGuid();
                 var osavotumaks = new Osavotumaks()
@@ -76,15 +80,16 @@ namespace WebApp.Controllers
                     OsavotumaksuStaatusId = defaultStaatusId,
                     TasumiseViisId = defaultViisId
                 };
-                _context.Add(osavotumaks);
+                
+                _uow.OsavotumaksRepository.Add(osavotumaks);
                 isik.Id = Guid.NewGuid();
                 isik.OsavotumaksId = guidOsavotumaks;
-                _context.Add(isik);
+                _uow.IsikRepository.Add(isik);
                 
-                await _context.SaveChangesAsync();
+                await _uow.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id", isik.OsavotumaksId);
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id", isik.OsavotumaksId);
             return View(isik);
         }
 
@@ -96,12 +101,12 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var isik = await _context.Isikud.FindAsync(id);
+            var isik = await _uow.IsikRepository.FindAsync(id.Value);
             if (isik == null)
             {
                 return NotFound();
             }
-            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id", isik.OsavotumaksId);
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id", isik.OsavotumaksId);
             return View(isik);
         }
 
@@ -121,8 +126,8 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(isik);
-                    await _context.SaveChangesAsync();
+                    _uow.IsikRepository.Update(isik);
+                    await _uow.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -137,7 +142,7 @@ namespace WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OsavotumaksId"] = new SelectList(_context.Osavotumaksud, "Id", "Id", isik.OsavotumaksId);
+            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id", isik.OsavotumaksId);
             return View(isik);
         }
 
@@ -149,8 +154,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var isik = await _context.Isikud
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var isik = await _uow.IsikRepository.FindAsync(id.Value);
+            
             if (isik == null)
             {
                 return NotFound();
@@ -164,19 +169,16 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var isik = await _context.Isikud.FindAsync(id);
-            if (isik != null)
-            {
-                _context.Isikud.Remove(isik);
-            }
-
-            await _context.SaveChangesAsync();
+            await _uow.IsikRepository.RemoveAsync(id);
+            
+            await _uow.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
         private bool IsikExists(Guid id)
         {
-            return _context.Isikud.Any(e => e.Id == id);
+            return (_uow.IsikRepository?.FindAsync(id) == null);
         }
     }
 }

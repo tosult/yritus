@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Contracts.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,18 @@ namespace WebApp.Controllers
 {
     public class TasumiseViisidController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppUOW _uow;
 
-        public TasumiseViisidController(ApplicationDbContext context)
+        public TasumiseViisidController(IAppUOW uow)
         {
-            _context = context;
+            _uow = uow;
         }
 
         // GET: TasumiseViisid
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TasumiseViisid.ToListAsync());
+            var vm = await _uow.TasumiseViisRepository.AllAsync();
+            return View(vm);
         }
 
         // GET: TasumiseViisid/Details/5
@@ -33,8 +35,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var tasumiseViis = await _context.TasumiseViisid
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tasumiseViis = await _uow.TasumiseViisRepository
+                .FindAsync(id.Value);
             if (tasumiseViis == null)
             {
                 return NotFound();
@@ -59,8 +61,8 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 tasumiseViis.Id = Guid.NewGuid();
-                _context.Add(tasumiseViis);
-                await _context.SaveChangesAsync();
+                _uow.TasumiseViisRepository.Add(tasumiseViis);
+                await _uow.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tasumiseViis);
@@ -74,7 +76,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var tasumiseViis = await _context.TasumiseViisid.FindAsync(id);
+            var tasumiseViis = await _uow.TasumiseViisRepository.FindAsync(id.Value);
             if (tasumiseViis == null)
             {
                 return NotFound();
@@ -98,8 +100,8 @@ namespace WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(tasumiseViis);
-                    await _context.SaveChangesAsync();
+                    _uow.TasumiseViisRepository.Update(tasumiseViis);
+                    await _uow.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,8 +127,8 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var tasumiseViis = await _context.TasumiseViisid
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tasumiseViis = await _uow.TasumiseViisRepository.FindAsync(id.Value);
+            
             if (tasumiseViis == null)
             {
                 return NotFound();
@@ -140,19 +142,16 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var tasumiseViis = await _context.TasumiseViisid.FindAsync(id);
-            if (tasumiseViis != null)
-            {
-                _context.TasumiseViisid.Remove(tasumiseViis);
-            }
-
-            await _context.SaveChangesAsync();
+            await _uow.TasumiseViisRepository.RemoveAsync(id);
+            
+            await _uow.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 
         private bool TasumiseViisExists(Guid id)
         {
-            return _context.TasumiseViisid.Any(e => e.Id == id);
+            return (_uow.TasumiseViisRepository?.FindAsync(id) == null);
         }
     }
 }

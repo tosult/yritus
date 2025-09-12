@@ -14,7 +14,7 @@ public class Isik : DomainEntityId
     [MaxLength(64)]
     public string Perenimi { get; set; }
     
-    public int Isikukood { get; set; }
+    public long Isikukood { get; set; }
     
     [MaxLength(1500)]
     public string? Lisainfo { get; set; }
