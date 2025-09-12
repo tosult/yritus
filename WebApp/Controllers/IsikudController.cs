@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.EF.App;
 using Domain.App;
+using WebApp.Models;
+using Osavotumaks = BLL.DTO.Osavotumaks;
 
 namespace WebApp.Controllers
 {
@@ -48,8 +50,21 @@ namespace WebApp.Controllers
         // GET: Isikud/Create
         public async Task<IActionResult> Create()
         {
+            var tasumiseViisid = await _uow.TasumiseViisRepository.AllAsync();
+            var osavotumaksuStaatusId = await _uow.OsavotumaksRepository.AllAsync();
+            
+            var vm = new IsikCreateViewModel()
+            {
+                isik = new Isik(),
+                TasumiseViisid = tasumiseViisid.Select(t => new SelectListItem
+                {
+                    Value = t.Id.ToString(),
+                    Text = t.ViisNimetus
+                })
+            };
+            
             ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "id");
-            return View();
+            return View(vm);
         }
 
         // POST: Isikud/Create
@@ -57,40 +72,39 @@ namespace WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Eesnimi,Perenimi,Isikukood,Lisainfo,Id")] Isik isik)
+        public async Task<IActionResult> Create(IsikCreateViewModel vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var defaultStaatusId = _uow.OsavotumaksuStaatusRepository
-                    .AllAsync()
-                    .Result
-                    .FirstOrDefault(i => !i.Staatus)
-                    .Id;
-
-                var defaultViisId = _uow.TasumiseViisRepository
-                    .AllAsync()
-                    .Result
-                    .FirstOrDefault(i => i.ViisNimetus == "Sularaha")
-                    .Id;
-                
-                var guidOsavotumaks = Guid.NewGuid();
-                var osavotumaks = new Osavotumaks()
-                {
-                    Id = guidOsavotumaks,
-                    OsavotumaksuStaatusId = defaultStaatusId,
-                    TasumiseViisId = defaultViisId
-                };
-                
-                _uow.OsavotumaksRepository.Add(osavotumaks);
-                isik.Id = Guid.NewGuid();
-                isik.OsavotumaksId = guidOsavotumaks;
-                _uow.IsikRepository.Add(isik);
-                
-                await _uow.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                vm.TasumiseViisid = (await _uow.TasumiseViisRepository.AllAsync())
+                    .Select(t => new SelectListItem
+                    {
+                        Value = t.Id.ToString(),
+                        Text = t.ViisNimetus
+                    });
+                return View(vm);
             }
-            ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id", isik.OsavotumaksId);
-            return View(isik);
+
+            var osavotumaksuStaatusId =
+                (await _uow.OsavotumaksuStaatusRepository.AllAsync())
+                .Where(o => !o.Staatus)
+                .Select(o => o.Id)
+                .FirstOrDefault();
+
+            var osavotumaks = new Domain.App.Osavotumaks
+            {
+                Id = Guid.NewGuid(),
+                TasumiseViisId = vm.selectTasumiseViisId,
+                OsavotumaksuStaatusId = osavotumaksuStaatusId
+            };
+            
+            vm.isik.Id = Guid.NewGuid();
+            vm.isik.Osavotumaks = osavotumaks;
+            
+            _uow.IsikRepository.Add(vm.isik);
+            await _uow.SaveChangesAsync();
+            
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Isikud/Edit/5
