@@ -172,7 +172,7 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id", isik.OsavotumaksId);
-            return View(isik);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Isikud/Delete/5
