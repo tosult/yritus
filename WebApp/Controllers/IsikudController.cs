@@ -76,6 +76,13 @@ namespace WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
+                foreach (var entry in ModelState)
+                {
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        Console.WriteLine($"{entry.Key}: {error.ErrorMessage}");
+                    }
+                }
                 vm.TasumiseViisid = (await _uow.TasumiseViisRepository.AllAsync())
                     .Select(t => new SelectListItem
                     {

@@ -8,5 +8,5 @@ public class IsikCreateViewModel
     public Isik isik { get; set; }
     
     public Guid selectTasumiseViisId { get; set; }
-    public IEnumerable<SelectListItem> TasumiseViisid { get; set; }
+    public IEnumerable<SelectListItem>? TasumiseViisid { get; set; }
 }
