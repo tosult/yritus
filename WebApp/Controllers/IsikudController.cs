@@ -119,7 +119,7 @@ namespace WebApp.Controllers
             _uow.IsikYrituselRepository.Add(isikYritusel);
             await _uow.SaveChangesAsync();
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Isikud/Edit/5
@@ -172,7 +172,7 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OsavotumaksId"] = new SelectList(await _uow.OsavotumaksRepository.AllAsync(), "Id", "Id", isik.OsavotumaksId);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Isikud/Delete/5
@@ -202,7 +202,7 @@ namespace WebApp.Controllers
             
             await _uow.SaveChangesAsync();
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool IsikExists(Guid id)
