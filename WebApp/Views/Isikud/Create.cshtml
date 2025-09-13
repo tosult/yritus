@@ -12,30 +12,31 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="YritusId"/>
             <div class="form-group">
-                <label asp-for="isik.Eesnimi" class="control-label"></label>
-                <input asp-for="isik.Eesnimi" class="form-control" />
-                <span asp-validation-for="isik.Eesnimi" class="text-danger"></span>
+                <label asp-for="Isik.Eesnimi" class="control-label"></label>
+                <input asp-for="Isik.Eesnimi" class="form-control" />
+                <span asp-validation-for="Isik.Eesnimi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="isik.Perenimi" class="control-label"></label>
-                <input asp-for="isik.Perenimi" class="form-control" />
-                <span asp-validation-for="isik.Perenimi" class="text-danger"></span>
+                <label asp-for="Isik.Perenimi" class="control-label"></label>
+                <input asp-for="Isik.Perenimi" class="form-control" />
+                <span asp-validation-for="Isik.Perenimi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="isik.Isikukood" class="control-label"></label>
-                <input asp-for="isik.Isikukood" class="form-control" />
-                <span asp-validation-for="isik.Isikukood" class="text-danger"></span>
+                <label asp-for="Isik.Isikukood" class="control-label"></label>
+                <input asp-for="Isik.Isikukood" class="form-control" />
+                <span asp-validation-for="Isik.Isikukood" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="isik.Lisainfo" class="control-label"></label>
-                <input asp-for="isik.Lisainfo" class="form-control" />
-                <span asp-validation-for="isik.Lisainfo" class="text-danger"></span>
+                <label asp-for="Isik.Lisainfo" class="control-label"></label>
+                <input asp-for="Isik.Lisainfo" class="form-control" />
+                <span asp-validation-for="Isik.Lisainfo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="selectTasumiseViisId" class="control-label">Makseviis</label>
-                <select asp-for="selectTasumiseViisId" asp-items="Model.TasumiseViisid" class="form-control"></select>
-                <span asp-validation-for="selectTasumiseViisId" class="text-danger"></span>
+                <label asp-for="SelectTasumiseViisId" class="control-label">Makseviis</label>
+                <select asp-for="SelectTasumiseViisId" asp-items="Model.TasumiseViisid" class="form-control"></select>
+                <span asp-validation-for="SelectTasumiseViisId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -48,7 +48,10 @@
                 @Html.DisplayFor(modelItem => item.IsikudYritusel!.Count)
             </td>
             <td>
+                <a asp-controller="Isikud" asp-action="Create" asp-route-yritusId="@item.Id">Lisa isik üritusele</a>
+                 | 
                 <a asp-controller="Yritused" asp-action="Edit" asp-route-id="@item.Id">Vaata/ muuda</a>
+                 | 
                 @if (item.Algus > DateTime.Now)
                 {
                     <a asp-controller="Yritused" asp-action="Delete" asp-route-id="@item.Id">Kustuta üritus</a>

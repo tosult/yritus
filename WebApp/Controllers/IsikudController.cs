@@ -48,14 +48,15 @@ namespace WebApp.Controllers
         }
 
         // GET: Isikud/Create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(Guid yritusId)
         {
             var tasumiseViisid = await _uow.TasumiseViisRepository.AllAsync();
             var osavotumaksuStaatusId = await _uow.OsavotumaksRepository.AllAsync();
             
             var vm = new IsikCreateViewModel()
             {
-                isik = new Isik(),
+                Isik = new Isik(),
+                YritusId = yritusId,
                 TasumiseViisid = tasumiseViisid.Select(t => new SelectListItem
                 {
                     Value = t.Id.ToString(),
@@ -101,14 +102,21 @@ namespace WebApp.Controllers
             var osavotumaks = new Domain.App.Osavotumaks
             {
                 Id = Guid.NewGuid(),
-                TasumiseViisId = vm.selectTasumiseViisId,
+                TasumiseViisId = vm.SelectTasumiseViisId,
                 OsavotumaksuStaatusId = osavotumaksuStaatusId
             };
             
-            vm.isik.Id = Guid.NewGuid();
-            vm.isik.Osavotumaks = osavotumaks;
-            
-            _uow.IsikRepository.Add(vm.isik);
+            vm.Isik.Id = Guid.NewGuid();
+            vm.Isik.Osavotumaks = osavotumaks;
+            _uow.IsikRepository.Add(vm.Isik);
+
+            var isikYritusel = new IsikYritusel
+            {
+                Id = Guid.NewGuid(),
+                YritusId = vm.YritusId,
+                IsikId = vm.Isik.Id,
+            };
+            _uow.IsikYrituselRepository.Add(isikYritusel);
             await _uow.SaveChangesAsync();
             
             return RedirectToAction(nameof(Index));
