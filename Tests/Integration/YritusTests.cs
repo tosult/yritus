@@ -84,4 +84,67 @@ public class YritusTests : IClassFixture<CustomWebAppFactory<Program>>
         Assert.Contains(nimi, decoded);
         _testOutputHelper.WriteLine(await indexResponse.Content.ReadAsStringAsync());
     }
+
+    [Fact(DisplayName = "POST - add isik to yritus")]
+    public async Task AddNewIsikTest()
+    {
+        var homeResponse = await _client.GetAsync("/");
+        homeResponse.EnsureSuccessStatusCode();
+        
+        var home = await HtmlHelpers.GetDocumentAsync(homeResponse);
+
+        var yritusRow = home.QuerySelectorAll("tr").Skip(1).FirstOrDefault();
+        Assert.NotNull(yritusRow);
+        
+        var detailsLink = yritusRow.QuerySelector("a[href*='/Yritused/Details']") as IHtmlAnchorElement;
+        Assert.NotNull(detailsLink);
+        var yritusId = detailsLink.Href.Split('/').Last();
+        // _testOutputHelper.WriteLine($"Yritus ID: {yritusId}");
+        
+        var addIsikLink = yritusRow.QuerySelector($"a[href*='/Isikud/Create?yritusId={yritusId}']") as IHtmlAnchorElement;
+        Assert.NotNull(addIsikLink);
+        
+        var createIsikResponse = await _client.GetAsync(addIsikLink.Href);
+        createIsikResponse.EnsureSuccessStatusCode();
+        var createIsik = await HtmlHelpers.GetDocumentAsync(createIsikResponse);
+        
+        var form = (IHtmlFormElement)createIsik.QuerySelector("form")!;
+        var requestVerificationToken = (IHtmlInputElement)createIsik
+            .QuerySelector("input[name=\"__RequestVerificationToken\"]")!;
+            
+        var eesnimi = "Toivo";
+        var perenimi = "Sults";
+        var isikukood = "39108160275";
+        var lisainfo = "Lisainfot ka natukene";
+        var tasumiseviisid = await TasumiseViisHelper.CreateTasumiseViis(_client);
+
+        var formValues = new Dictionary<string, string> 
+        {
+            ["YritusId"] = yritusId,
+            ["Eesnimi"] = eesnimi,
+            ["Perenimi"] = perenimi,
+            ["Isikukood"] = isikukood,
+            ["Lisainfo"] = lisainfo,
+            ["SelectTasumiseViisId"] = tasumiseviisid.ToString(),
+            
+            ["__RequestVerificationToken"] = requestVerificationToken.Value,
+        };
+        
+        var postRegisterResponse = await _client.PostAsync($"/Isikud/Create?yritusId={yritusId}",
+            new FormUrlEncodedContent(formValues));
+        Assert.Equal(HttpStatusCode.OK, postRegisterResponse.StatusCode);
+        
+        var checkYritusAfteResponse = await _client.GetAsync(postRegisterResponse.Headers.Location);
+        checkYritusAfteResponse.EnsureSuccessStatusCode();
+        var decoded = WebUtility.HtmlDecode(checkYritusAfteResponse.Content.ReadAsStringAsync().Result);
+        
+        _testOutputHelper.WriteLine(decoded);
+        
+        Assert.Contains(eesnimi, decoded);
+        Assert.Contains(perenimi, decoded);
+        
+        // var indexHtml = await homeResponse.Content.ReadAsStringAsync();
+        // var decoded = WebUtility.HtmlDecode(indexHtml);
+        // _testOutputHelper.WriteLine(indexHtml);
+    }
 }
