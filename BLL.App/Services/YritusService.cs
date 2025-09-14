@@ -18,7 +18,7 @@ public class YritusService : BaseEntityService<BLL.DTO.Yritus, Domain.App.Yritus
     public async Task<IEnumerable<DTO.Yritus>> AllAsync()
     {
         return (await Uow.YritusRepository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 

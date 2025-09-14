@@ -121,22 +121,37 @@ public class YritusTests : IClassFixture<CustomWebAppFactory<Program>>
         var formValues = new Dictionary<string, string> 
         {
             ["YritusId"] = yritusId,
-            ["Eesnimi"] = eesnimi,
-            ["Perenimi"] = perenimi,
-            ["Isikukood"] = isikukood,
-            ["Lisainfo"] = lisainfo,
+            ["Isik.Eesnimi"] = eesnimi,
+            ["Isik.Perenimi"] = perenimi,
+            ["Isik.Isikukood"] = isikukood,
+            ["Isik.Lisainfo"] = lisainfo,
             ["SelectTasumiseViisId"] = tasumiseviisid.ToString(),
             
             ["__RequestVerificationToken"] = requestVerificationToken.Value,
         };
         
+        /*
+        _testOutputHelper.WriteLine(yritusId);
+        _testOutputHelper.WriteLine(eesnimi);
+        _testOutputHelper.WriteLine(perenimi);
+        _testOutputHelper.WriteLine(isikukood);
+        _testOutputHelper.WriteLine(lisainfo);
+        _testOutputHelper.WriteLine(tasumiseviisid.ToString());
+        */
+        
         var postRegisterResponse = await _client.PostAsync($"/Isikud/Create?yritusId={yritusId}",
             new FormUrlEncodedContent(formValues));
-        Assert.Equal(HttpStatusCode.OK, postRegisterResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.Found, postRegisterResponse.StatusCode);
         
+        var yritus = await _client.GetAsync($"/Yritused/Details/{yritusId}");
+        yritus.EnsureSuccessStatusCode();
+        var decoded = WebUtility.HtmlDecode(yritus.Content.ReadAsStringAsync().Result);
+        
+        /*
         var checkYritusAfteResponse = await _client.GetAsync(postRegisterResponse.Headers.Location);
         checkYritusAfteResponse.EnsureSuccessStatusCode();
         var decoded = WebUtility.HtmlDecode(checkYritusAfteResponse.Content.ReadAsStringAsync().Result);
+        */
         
         _testOutputHelper.WriteLine(decoded);
         

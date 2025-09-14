@@ -5,19 +5,15 @@ namespace Domain.App;
 
 public class Yritus : DomainEntityId, IValidatableObject
 {
-    [Required]
-    [MaxLength(128)]
-    public string Nimi { get; set; }
+    [Required] [MaxLength(128)] public string Nimi { get; set; } = default!;
     
     [Required]
     public DateTime Algus { get; set; }
     
     [Required]
     public DateTime Lopp { get; set; }
-    
-    [Required]
-    [MaxLength(128)]
-    public string Asukoht { get; set; }
+
+    [Required] [MaxLength(128)] public string Asukoht { get; set; } = default!;
     
     public ICollection<IsikYritusel>?  IsikudYritusel { get; set; }
 

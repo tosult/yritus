@@ -18,7 +18,7 @@ public class TasumiseViisService : BaseEntityService<BLL.DTO.TasumiseViis, Domai
     public async Task<IEnumerable<DTO.TasumiseViis>> AllAsync()
     {
         return (await Uow.TasumiseViisRepository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 

@@ -18,7 +18,7 @@ public class JurIsikService : BaseEntityService<BLL.DTO.JurIsik, Domain.App.JurI
     public async Task<IEnumerable<DTO.JurIsik>> AllAsync()
     {
         return (await Uow.JurIsikRepository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 

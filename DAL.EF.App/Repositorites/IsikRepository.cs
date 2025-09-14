@@ -17,7 +17,7 @@ public class IsikRepository : EFBaseRepository<Isik, ApplicationDbContext>, IIsi
         return await RepositoryDbSet
             .Include(e => e.IsikudYritusel)
             .Include(e => e.Osavotumaks)
-            .ThenInclude(e => e.TasumiseViis)
+            .ThenInclude(e => e!.TasumiseViis)
             .OrderBy(e => e.Perenimi)
             .ToListAsync();
     }
@@ -27,7 +27,7 @@ public class IsikRepository : EFBaseRepository<Isik, ApplicationDbContext>, IIsi
         return await RepositoryDbSet
             .Include(e => e.IsikudYritusel)
             .Include(e => e.Osavotumaks)
-            .ThenInclude(e => e.TasumiseViis)
+            .ThenInclude(e => e!.TasumiseViis)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 

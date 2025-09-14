@@ -18,7 +18,7 @@ public class IsikYrituselService : BaseEntityService<BLL.DTO.IsikYritusel, Domai
     public async Task<IEnumerable<DTO.IsikYritusel>> AllAsync()
     {
         return (await Uow.IsikYrituselRepository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 

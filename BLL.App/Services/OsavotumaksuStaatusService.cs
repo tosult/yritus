@@ -18,7 +18,7 @@ public class OsavotumaksuStaatusService : BaseEntityService<BLL.DTO.Osavotumaksu
     public async Task<IEnumerable<DTO.OsavotumaksuStaatus>> AllAsync()
     {
         return (await Uow.OsavotumaksuStaatusRepository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 

@@ -49,7 +49,7 @@
                     @foreach (var osaleja in Model.IsikudYritusel)
                     {
                         <tr>
-                            <td><a asp-controller="Isikud" asp-action="Details" asp-route-id="@osaleja.Isik.Id">@osaleja.Isik!.Eesnimi</a></td>
+                            <td><a asp-controller="Isikud" asp-action="Details" asp-route-id="@osaleja.Isik!.Id">@osaleja.Isik!.Eesnimi</a></td>
                             <td>@osaleja.Isik!.Perenimi</td>
                             <td>@osaleja.Isik.Isikukood</td>
                         </tr>

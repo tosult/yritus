@@ -18,7 +18,7 @@ public class OsavotumaksService : BaseEntityService<BLL.DTO.Osavotumaks, Domain.
     public async Task<IEnumerable<DTO.Osavotumaks>> AllAsync()
     {
         return (await Uow.OsavotumaksRepository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 

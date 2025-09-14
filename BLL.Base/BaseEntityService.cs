@@ -35,7 +35,7 @@ public class BaseEntityService<TBllEntity, TDalEntity, TRepository, TKey> : IEnt
     public async Task<IEnumerable<TBllEntity>> AllAsync()
     {
         return (await Repository.AllAsync()).Select(
-            e => Mapper.Map(e)
+            e => Mapper.Map(e)!
         );
     }
 
@@ -46,17 +46,17 @@ public class BaseEntityService<TBllEntity, TDalEntity, TRepository, TKey> : IEnt
 
     public TBllEntity Add(TBllEntity entity)
     {
-        return Mapper.Map(Repository.Add(Mapper.Map(entity)))!;
+        return Mapper.Map(Repository.Add(Mapper.Map(entity)!))!;
     }
 
     public TBllEntity Update(TBllEntity entity)
     {
-        return Mapper.Map(Repository.Update(Mapper.Map(entity)))!;
+        return Mapper.Map(Repository.Update(Mapper.Map(entity)!))!;
     }
 
     public TBllEntity Remove(TBllEntity entity)
     {
-        return Mapper.Map(Repository.Remove(Mapper.Map(entity)))!;
+        return Mapper.Map(Repository.Remove(Mapper.Map(entity)!))!;
     }
 
     public async Task<TBllEntity?> RemoveAsync(TKey id)
