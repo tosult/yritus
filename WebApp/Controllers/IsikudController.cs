@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DAL.Contracts.App;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DAL.EF.App;
 using Domain.App;
 using WebApp.Models;
-using Osavotumaks = BLL.DTO.Osavotumaks;
 
 namespace WebApp.Controllers
 {
@@ -51,7 +45,6 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Create(Guid yritusId)
         {
             var tasumiseViisid = await _uow.TasumiseViisRepository.AllAsync();
-            var osavotumaksuStaatusId = await _uow.OsavotumaksRepository.AllAsync();
             
             var vm = new IsikCreateViewModel()
             {
@@ -99,7 +92,7 @@ namespace WebApp.Controllers
                 .Select(o => o.Id)
                 .FirstOrDefault();
 
-            var osavotumaks = new Domain.App.Osavotumaks
+            var osavotumaks = new Osavotumaks
             {
                 Id = Guid.NewGuid(),
                 TasumiseViisId = vm.SelectTasumiseViisId,

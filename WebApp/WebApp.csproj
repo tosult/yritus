@@ -27,4 +27,9 @@
       <ProjectReference Include="..\DAL.EF.App\DAL.EF.App.csproj" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
 </Project>

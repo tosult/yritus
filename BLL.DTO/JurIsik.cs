@@ -10,9 +10,8 @@ public class JurIsik : DomainEntityId
     
     public Guid JurIsikLiikId { get; set; }
     public JurIsikLiik? JurIsikLiik { get; set; }
-    
-    [MaxLength(128)]
-    public string Nimi { get; set; }
+
+    [MaxLength(128)] public string Nimi { get; set; } = default!;
     
     public int Registrikood { get; set; }
     
