@@ -10,6 +10,7 @@ Automapper
 Microsoft.VisualStudio.Web.CodeGeneration.Design
 Microsoft.EntityFrameworkCore.Tools
 Microsoft.EntityFrameworkCore.SqlServe
+AngleSharp
 
 # create migration
 dotnet ef migrations add Initial --project DAL.EF.App --startup-project WebApp --context ApplicationDbContext
